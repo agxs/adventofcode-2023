@@ -23,13 +23,9 @@ fn card_points(input: &str) {
         let winners = pipe.next().unwrap();
         let cards = pipe.next().unwrap();
 
-        let mut number_matches: Vec<&str> = Vec::new();
         let winning_numbers: HashSet<&str> = winners.split_whitespace().collect();
-        for number in cards.split_whitespace() {
-            if winning_numbers.contains(number) {
-                number_matches.push(number);
-            }
-        }
+        let number_matches: Vec<&str> = cards.split_whitespace()
+            .filter(|number| winning_numbers.contains(number)).collect();
 
         println!("  Matches {:?}", number_matches);
 
@@ -50,7 +46,11 @@ fn card_points(input: &str) {
 }
 
 fn card_count(input: &str) {
-    let mut card_count: HashMap<usize, i32> = input.lines().into_iter().enumerate().map(|(i, x)| (i + 1, 1) ).collect();
+    let mut card_count: HashMap<usize, i32> = input
+        .lines()
+        .enumerate()
+        .map(|(i, x)| (i + 1, 1) )
+        .collect();
 
     for line in input.lines() {
         let mut colon = line.split(":");
@@ -65,13 +65,10 @@ fn card_count(input: &str) {
         let winners = pipe.next().unwrap();
         let cards = pipe.next().unwrap();
 
-        let mut number_matches: Vec<&str> = Vec::new();
         let winning_numbers: HashSet<&str> = winners.split_whitespace().collect();
-        for number in cards.split_whitespace() {
-            if winning_numbers.contains(number) {
-                number_matches.push(number);
-            }
-        }
+        let number_matches: Vec<&str> = cards.split_whitespace()
+            .filter(|number| winning_numbers.contains(number))
+            .collect();
 
         let end_index = card_count.len().min(card_id as usize + number_matches.len());
         if card_id + 1 > card_count.len() {
