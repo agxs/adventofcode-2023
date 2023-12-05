@@ -66,7 +66,7 @@ fn do_mapping(value: i64, mappings: &Vec<Map>, name: &str) -> i64 {
 
 fn main() {
     let input = read_file("input.txt").expect("Unable to read file");
-    let mut seed_locations: Vec<i64> = Vec::new();
+    let mut lowest_location = std::i64::MAX;
 
     let mut input_iter = input.lines();
     let seed_str = input_iter.next().unwrap();
@@ -110,10 +110,10 @@ fn main() {
             let value = do_mapping(value, &temp_to_humidity, "Temp To Humidity");
             let value = do_mapping(value, &humidity_to_location, "Humidity To Location");
 
-            seed_locations.push(value);
+            lowest_location = lowest_location.min(value);
         }
     }
 
-    let lowest_location = seed_locations.iter().min().unwrap();
     println!("Lowest id is {}", lowest_location);
+    assert_eq!(79874951, lowest_location);
 }
